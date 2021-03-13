@@ -1,40 +1,13 @@
-version: '3'
+version: "3.8"
 
 services:
-  api:
-    build:
-      context: .
-      dockerfile: api.Dockerfile
+  db:
+    container_name: mongo_nest_poc
+    image: mongo
     ports:
-      - '3000:3000'
-    container_name: api
-    restart: always
+      - 27017:27017
     volumes:
-      - api-logs:/usr/src/node-api/logs:rw
-    environment:
-      - NODE_ENV=development
-    depends_on:
-      - pgsql
-
-  pgsql:
-    image: postgres:alpine
-    ports:
-      - '5432:5432'
-    container_name: 'pgsql'
-    restart: always
-    volumes:
-      - pg-data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: pguser
-      POSTGRES_PASSWORD: pgpassword
-      POSTGRES_DB: nestjs
-
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
+      - mongo:/data/db
 
 volumes:
-  api-logs:
-  pg-data:
+  mongo:

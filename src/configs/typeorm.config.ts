@@ -1,12 +1,12 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
-export const typeOrmConfig: TypeOrmModuleOptions = {
-  type: 'postgres',
-  host: 'pgsql',
-  port: 5432,
-  username: 'pguser',
-  password: 'pgpassword',
-  database: 'nestjs',
-  entities: [__dirname + '/../**/*.entity.{js,ts}'],
-  synchronize: true,
+export const getTypeOrmConfig = (): TypeOrmModuleOptions => {
+  return {
+    type: 'mongodb',
+    url: process.env.MONGODB_URI,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    entities: [__dirname + '/../**/*.entity.{js,ts}'],
+    synchronize: true,
+  };
 };

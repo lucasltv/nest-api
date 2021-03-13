@@ -1,0 +1,7 @@
+APP_NAME="nest-api-poc"
+NODE_ENV=development
+APP_URL=http://localhost:3000
+PORT=3001
+
+# LOCALHOST
+MONGODB_URI=mongodb://localhost:27017/nest-api

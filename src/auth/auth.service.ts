@@ -11,7 +11,6 @@ import { User } from '../users/user.entity';
 import { UserRole } from '../users/user-roles.enum';
 import { CredentialsDto } from './dto/credentials.dto';
 import { JwtService } from '@nestjs/jwt';
-import { MailerService } from '@nestjs-modules/mailer';
 import { randomBytes } from 'crypto';
 import { ChangePasswordDto } from './dto/change-password.dto';
 
@@ -21,7 +20,6 @@ export class AuthService {
     @InjectRepository(UserRepository)
     private userRepository: UserRepository,
     private jwtService: JwtService,
-    private mailerService: MailerService,
   ) {}
 
   async signUp(createUserDto: CreateUserDto): Promise<User> {
@@ -32,16 +30,7 @@ export class AuthService {
         createUserDto,
         UserRole.USER,
       );
-      const mail = {
-        to: user.email,
-        from: 'noreply@application.com',
-        subject: 'Email de confirmação',
-        template: 'email-confirmation',
-        context: {
-          token: user.confirmationToken,
-        },
-      };
-      await this.mailerService.sendMail(mail);
+
       return user;
     }
   }
@@ -87,7 +76,6 @@ export class AuthService {
         token: user.recoverToken,
       },
     };
-    await this.mailerService.sendMail(mail);
   }
 
   async changePassword(
