@@ -28,7 +28,7 @@ export class UsersService {
 
   async findUserById(userId: string): Promise<User> {
     const user = await this.userRepository.findOne(userId, {
-      select: ['email', 'name', 'role', 'id'],
+      select: ['email', 'name', 'role', '_id'],
     });
 
     if (!user) throw new NotFoundException('Usuário não encontrado');
@@ -36,10 +36,10 @@ export class UsersService {
     return user;
   }
 
-  async updateUser(updateUserDto: UpdateUserDto, id: string) {
-    const result = await this.userRepository.update({ id }, updateUserDto);
+  async updateUser(updateUserDto: UpdateUserDto, _id: string) {
+    const result = await this.userRepository.update({ _id }, updateUserDto);
     if (result.affected > 0) {
-      const user = await this.findUserById(id);
+      const user = await this.findUserById(_id);
       return user;
     } else {
       throw new NotFoundException('Usuário não encontrado');
@@ -47,7 +47,7 @@ export class UsersService {
   }
 
   async deleteUser(userId: string) {
-    const result = await this.userRepository.delete({ id: userId });
+    const result = await this.userRepository.delete({ _id: userId });
     if (result.affected === 0) {
       throw new NotFoundException(
         'Não foi encontrado um usuário com o ID informado',

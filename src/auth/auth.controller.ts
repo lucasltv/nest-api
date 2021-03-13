@@ -8,6 +8,7 @@ import {
   Patch,
   Param,
   UnauthorizedException,
+  HttpCode,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
@@ -76,7 +77,7 @@ export class AuthController {
     @Body(ValidationPipe) changePasswordDto: ChangePasswordDto,
     @GetUser() user: User,
   ) {
-    if (user.role !== UserRole.ADMIN && user.id.toString() !== id)
+    if (user.role !== UserRole.ADMIN && user._id.toString() !== id)
       throw new UnauthorizedException(
         'Você não tem permissão para realizar esta operação',
       );

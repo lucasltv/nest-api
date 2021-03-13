@@ -43,7 +43,7 @@ export class AuthService {
     }
 
     const jwtPayload = {
-      id: user.id,
+      _id: user._id.toString(),
     };
     const token = await this.jwtService.sign(jwtPayload);
 
@@ -97,13 +97,13 @@ export class AuthService {
     const user = await this.userRepository.findOne(
       { recoverToken },
       {
-        select: ['id'],
+        select: ['_id'],
       },
     );
     if (!user) throw new NotFoundException('Token inválido.');
 
     try {
-      await this.changePassword(user.id.toString(), changePasswordDto);
+      await this.changePassword(user._id.toString(), changePasswordDto);
     } catch (error) {
       throw error;
     }

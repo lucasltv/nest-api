@@ -2,18 +2,19 @@ import {
   BaseEntity,
   Entity,
   Unique,
-  PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  ObjectIdColumn,
+  Index,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
 @Entity()
 @Unique(['email'])
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @ObjectIdColumn()
+  _id: string;
 
   @Column({ nullable: false, type: 'varchar', length: 200 })
   email: string;
@@ -40,6 +41,7 @@ export class User extends BaseEntity {
   recoverToken: string;
 
   @CreateDateColumn()
+  @Index({ expireAfterSeconds: 30, background: true })
   createdAt: Date;
 
   @UpdateDateColumn()
