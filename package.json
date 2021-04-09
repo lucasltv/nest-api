@@ -1,9 +1,12 @@
 {
-  "name": "nestjs-pgsql-api",
-  "version": "0.0.1",
+  "name": "nestjs-api",
+  "version": "0.1.1",
   "description": "",
-  "author": "",
   "license": "MIT",
+  "author": {
+    "name": "Lucas Vieira",
+    "email": "lucas@devplace.com.br"
+  },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
